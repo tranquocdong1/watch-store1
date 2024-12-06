@@ -35,8 +35,11 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id); // Xóa sản phẩm khỏi DB
+        } else {
+            throw new RuntimeException("Product not found!");
+        }
     }
-
 }
 

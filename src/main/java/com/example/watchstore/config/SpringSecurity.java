@@ -29,8 +29,11 @@ public class SpringSecurity {
         http.csrf(csrf -> csrf.disable()) // Vô hiệu hóa CSRF
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/register/**").permitAll() // Cho phép truy cập không cần đăng nhập
+                                .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/index").permitAll()
+                                .requestMatchers("/products").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN") // Chỉ cho phép ADMIN truy cập
                                 .anyRequest().authenticated()
                 )
