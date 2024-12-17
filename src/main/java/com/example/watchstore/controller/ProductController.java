@@ -42,17 +42,27 @@ public class ProductController {
         return "products";
     }
 
-
-    @DeleteMapping("/api/{id}")
+    // 4. Thêm sản phẩm mới (POST)
+    @PostMapping("/api")
     @ResponseBody
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        if (product == null) {
-            return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy sản phẩm
-        }
-        productService.deleteProduct(id); // Xóa sản phẩm
-        return ResponseEntity.noContent().build(); // Trả về 204 khi thành công
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        Product savedProduct = productService.saveProduct(product);
+        return ResponseEntity.ok(savedProduct);
     }
 
+    // 5. Cập nhật thông tin sản phẩm (PUT)
+    @PutMapping("/api/{id}")
+    @ResponseBody
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        Product updatedProduct = productService.updateProduct(id, productDetails);
+        return ResponseEntity.ok(updatedProduct);
+    }
 
+    // 6. Xóa sản phẩm (DELETE)
+    @DeleteMapping("/api/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok("Product with ID " + id + " has been deleted.");
+    }
 }

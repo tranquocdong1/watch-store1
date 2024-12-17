@@ -35,6 +35,7 @@ public class SpringSecurity {
                                 .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/index").permitAll()
                                 .requestMatchers("/products").permitAll()
+                                .requestMatchers("/admin/products").hasRole("ADMIN") // Chỉ ADMIN mới được truy cập
                                 .requestMatchers("/users").hasRole("ADMIN") // Chỉ cho phép ADMIN truy cập
                                 .anyRequest().permitAll()
                 )
